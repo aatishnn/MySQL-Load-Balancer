@@ -1,3 +1,15 @@
 MySQL Load Balancer
 Often, web applications lack the ability for multiple MySQL servers to be used.So, this project is an effort to create
 a PHP class that could be implemented in many PHP applications without or with slight modification.
+
+Using on Wordpress:
+Place balancer.inc.php on root directory and use the sample wp-config provided.
+
+Implemented:
+Primary and Backup server
+
+TODO:
+Create sample configs for popular CMSes and blogging platforms.
+Round-Robin Configuration
+Priority Based Selection
+
