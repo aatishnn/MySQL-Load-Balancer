@@ -1,6 +1,8 @@
 MySQL Load Balancer
 Often, web applications lack the ability for multiple MySQL servers to be used.So, this project is an effort to create
 a PHP class that could be implemented in many PHP applications without or with slight modification.
+It uses a text file for storing data about whether the system has to fall back on backup server or not.
+This will prevent data loss until the main server is live again and well synchronised.After falling to backup server,the status.txt should be removed. 
 
 Using on Wordpress:
 Place balancer.inc.php on root directory and use the sample wp-config provided.
@@ -12,4 +14,6 @@ TODO:
 Create sample configs for popular CMSes and blogging platforms.
 Round-Robin Configuration
 Priority Based Selection
+
+Use at your own risk.
 
