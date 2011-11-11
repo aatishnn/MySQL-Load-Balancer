@@ -24,6 +24,7 @@ class loadbalancer
 public $server_main=array("Hostname:Port","root","password","dbname");
 public $backup_server=array("Hostname:Port","root","password","dbname");
 public $debug_info = "";
+public $myFile = "status.txt";
 
 function checkserver($server,$username,$password,$db) {
 	try{
@@ -42,12 +43,30 @@ function checkserver($server,$username,$password,$db) {
 			}
 
 	}
+function checkstatus(){
+$fh = @fopen($myFile, 'r');
+$status = @fread($fh, 6);
+fclose($fh);
+if($status=="Backup")
+return false;//Backup Server is used
+else 
+return true;
+}
 
 function returnconfig(){
-if($this->checkserver($this->server_main[0],$this->server_main[1],$this->server_main[2],$this->server_main[3])
+if($this->checkserver($this->server_main[0],$this->server_main[1],$this->server_main[2],$this->server_main[3])){
+if($this->checkstatus()){
 return server_main;
+}
+}
 else
 return backup_server;
+if(!$this->checkstatus()){
+$fh = @fopen($this->myFile, 'w')
+$stringData = "Backup";
+@fwrite($fh, $stringData);
+@fclose($fh);
+}
 }
 }
 ?>
