@@ -21,8 +21,8 @@
  */
 class loadbalancer
 {
-public $server_main=array("Hostname:Port","root","password","dbname");
-public $backup_server=array("Hostname:Port","root","password","dbname");
+public $server_main=array("127.0.0.1:3306","root","","maindb");
+public $backup_server=array("127.0.0.2:3309","root","","backupdb");
 public $debug_info = "";
 public $myFile = "status.txt";
 
@@ -44,30 +44,29 @@ function checkserver($server,$username,$password,$db) {
 
 	}
 function checkstatus(){
-$fh = @fopen($myFile, 'r');
-$status = @fread($fh, 6);
+if(file_exists($this->myFile)){
+$fh = fopen($this->myFile, 'r');
+$status = fread($fh, '6');
 fclose($fh);
 if($status=="Backup")
 return false;//Backup Server is used
-else 
+}
 return true;
 }
 
 function returnconfig(){
-if($this->checkserver($this->server_main[0],$this->server_main[1],$this->server_main[2],$this->server_main[3])){
-if($this->checkstatus()){
-return server_main;
-}
+if($this->checkserver($this->server_main[0],$this->server_main[1],$this->server_main[2],$this->server_main[3]) && $this->checkstatus()){
+return $this->server_main;
 }
 else
-return backup_server;
-if(!$this->checkstatus()){
-$fh = @fopen($this->myFile, 'w')
-$stringData = "Backup";
-@fwrite($fh, $stringData);
-@fclose($fh);
+{
+$fh = fopen($this->myFile, 'w');
+fwrite($fh, "Backup");
+fclose($fh);
+return $this->backup_server;
 }
 }
 }
+
 ?>
 
