@@ -47,7 +47,7 @@ define('DB_NAME', $server[3]);
 define('DB_USER', $server[1]);
 
 /** MySQL database password */
-define('DB_PASSWORD', $server[2]');
+define('DB_PASSWORD', $server[2]);
 
 /** MySQL hostname */
 define('DB_HOST', $server[0]);
