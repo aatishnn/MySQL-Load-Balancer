@@ -21,8 +21,8 @@
  */
 class loadbalancer
 {
-public $server_main=array("127.0.0.1:3306","root","","maindb");
-public $backup_server=array("127.0.0.2:3309","root","","backupdb");
+public $server_main=array("127.0.0.1:3306","root","password","maindb");
+public $backup_server=array("127.0.0.2:3309","root","password","backupdb");
 public $debug_info = "";
 public $myFile = "status.txt";
 
@@ -33,9 +33,12 @@ function checkserver($server,$username,$password,$db) {
 			throw new Exception("Cannot connect to MYSQL server");
 
 			$db_select=@mysql_select_db($db,$connection);
-			if(!$db_select)
+			if(!$db_select){
+			mysql_close();
 			throw new Exception("Cannot select database");
+			}
 			return true;
+			
 		}
 	catch(Exception $e){
 			$this->debug_info = $e->getMessage();
